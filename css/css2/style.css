@@ -1,12 +1,570 @@
+/* ============================================================
+   NABILA'S BIRTHDAY — STYLE.CSS
+   Monochrome, cinematic, deeply personal.
+   ============================================================ */
 
+/* ---------- RESET & BASE ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --off-white: #f0f0f0;
+  --dim: rgba(255,255,255,0.08);
+  --dim-md: rgba(255,255,255,0.15);
+  --dim-hi: rgba(255,255,255,0.55);
 
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-ui: 'Inter', system-ui, sans-serif;
 
+  --transition-smooth: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
 
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
 
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
+/* ---------- BACKGROUND ORBS ---------- */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
 
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  animation: orbFloat 18s ease-in-out infinite alternate;
+}
 
+.orb-1 {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, #ffffff 0%, #888888 60%, transparent 100%);
+  top: -120px; left: -100px;
+  animation-duration: 20s;
+  animation-delay: 0s;
+}
+.orb-2 {
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, #cccccc 0%, #555555 60%, transparent 100%);
+  top: 30%; right: -80px;
+  animation-duration: 16s;
+  animation-delay: -4s;
+}
+.orb-3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #aaaaaa 0%, #333333 60%, transparent 100%);
+  bottom: 10%; left: 20%;
+  animation-duration: 22s;
+  animation-delay: -8s;
+}
+.orb-4 {
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, #ffffff 0%, #666666 60%, transparent 100%);
+  top: 60%; left: -60px;
+  animation-duration: 14s;
+  animation-delay: -2s;
+}
+.orb-5 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, #dddddd 0%, #444444 60%, transparent 100%);
+  bottom: -80px; right: 10%;
+  animation-duration: 19s;
+  animation-delay: -10s;
+}
 
+@keyframes orbFloat {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(40px, -30px) scale(1.05); }
+  66%  { transform: translate(-20px, 50px) scale(0.97); }
+  100% { transform: translate(30px, 20px) scale(1.03); }
+}
 
+/* ---------- SECTIONS BASE ---------- */
+.section {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+}
+
+.section.active-section {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Hero, Memories & Wishes scroll normally — override fixed */
+.section--hero,
+.section--memories,
+.section--wishes {
+  position: relative;
+  opacity: 1;
+  pointer-events: all;
+  display: none; /* shown by JS after loading */
+}
+
+.section--hero.revealed,
+.section--memories.revealed,
+.section--wishes.revealed {
+  display: flex;
+}
+
+/* ---------- BUTTON ---------- */
+.btn-primary {
+  display: inline-block;
+  border: 1.5px solid var(--white);
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.75rem 2.2rem;
+  cursor: pointer;
+  border-radius: 9999px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  margin-top: 2rem;
+}
+
+.btn-primary:hover {
+  background: var(--white);
+  color: var(--black);
+  transform: scale(1.04);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   SECTION 1 — OPENING
+   ============================================================ */
+.section--opening {
+  text-align: center;
+  flex-direction: column;
+}
+
+.opening__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.opening__icon {
+  margin-bottom: 1.4rem;
+  opacity: 0.9;
+  animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50%       { transform: scale(1.06); opacity: 1; }
+}
+
+.opening__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   SECTION 2 — LOADING
+   ============================================================ */
+.section--loading {
+  flex-direction: column;
+  text-align: center;
+}
+
+.loading__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading__ring {
+  position: relative;
+  width: clamp(100px, 20vw, 140px);
+  height: clamp(100px, 20vw, 140px);
+}
+
+.loading__svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.loading__track {
+  fill: none;
+  stroke: rgba(255,255,255,0.12);
+  stroke-width: 3;
+}
+
+.loading__arc {
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 314.16;
+  stroke-dashoffset: 314.16;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.loading__percent {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 0.5rem;
+}
+
+.loading__label {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+
+/* ============================================================
+   SECTION 3 — HERO
+   ============================================================ */
+.section--hero {
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+}
+
+#particle-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 10vw, 7.5rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 60px rgba(255,255,255,0.2);
+  animation: heroEntrance 1.2s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+.hero__subtitle {
+  font-family: var(--font-script);
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  font-weight: 400;
+  color: rgba(255,255,255,0.8);
+  margin-top: 0.8rem;
+  animation: heroEntrance 1.2s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes heroEntrance {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   SECTION 4 — MEMORIES
+   ============================================================ */
+.section--memories {
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 2rem 4rem;
+  min-height: 100dvh;
+}
+
+.memories__container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.memories__heading {
+  font-family: var(--font-script);
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 3.5rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.memories__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 1.6rem;
+  align-items: start;
+}
+
+/* ---------- POLAROID ---------- */
+.polaroid {
+  background: var(--white);
+  padding: 0.6rem 0.6rem 1.8rem;
+  box-shadow: 0 8px 40px rgba(255,255,255,0.06), 0 2px 12px rgba(0,0,0,0.6);
+  transform: rotate(var(--rotate, 0deg));
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default;
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.04);
+  box-shadow: 0 16px 60px rgba(255,255,255,0.12);
+  z-index: 10;
+}
+
+.polaroid--lg .polaroid__photo { height: 200px; }
+.polaroid--md .polaroid__photo { height: 160px; }
+.polaroid--sm .polaroid__photo { height: 130px; }
+
+.polaroid__photo {
+  width: 100%;
+  overflow: hidden;
+  background: #111;
+  filter: grayscale(100%) contrast(1.05);
+}
+
+.polaroid__caption {
+  font-family: var(--font-script);
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* ---------- HANDWRITTEN NOTE ---------- */
+.polaroid__note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.note__text {
+  font-family: var(--font-script);
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+}
+
+/* ============================================================
+   SECTION 5 — WISHES & LOVE
+   ============================================================ */
+.section--wishes {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 5rem 2rem 6rem;
+  min-height: 80dvh;
+}
+
+.wishes__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  max-width: 640px;
+  width: 100%;
+}
+
+/* ---------- HEART ---------- */
+.heart-container {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.heart-dots {
+  position: absolute;
+  inset: 0;
+}
+
+.heart-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--white);
+  border-radius: 50%;
+  animation: dotGlow 2.4s ease-in-out infinite alternate;
+  box-shadow: 0 0 6px 2px rgba(255,255,255,0.6);
+}
+
+@keyframes dotGlow {
+  0%   { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 1;   transform: scale(1.4); }
+}
+
+.heart-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+
+.heart-love {
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.heart-name {
+  font-family: var(--font-script);
+  font-size: 2.8rem;
+  font-weight: 700;
+}
+
+/* ---------- WISHES MESSAGE ---------- */
+.wishes__message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.wishes__title {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.wishes__body {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-style: italic;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.85);
+}
+
+.wishes__signature {
+  font-family: var(--font-script);
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 0.4rem;
+}
+
+/* ============================================================
+   REVEAL / SCROLL ANIMATION
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: var(--delay, 0s);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE — TABLET
+   ============================================================ */
+@media (max-width: 900px) {
+  .memories__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE
+   ============================================================ */
+@media (max-width: 600px) {
+  .memories__grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .polaroid__note {
+    text-align: center;
+  }
+
+  .heart-container {
+    width: 220px;
+    height: 220px;
+  }
+
+  .heart-name {
+    font-size: 2.2rem;
+  }
+
+  .section--memories,
+  .section--wishes {
+    padding: 3.5rem 1.2rem 3rem;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .orb, .opening__icon, .heart-dot {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

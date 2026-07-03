@@ -142,6 +142,7 @@ const aboutMacBtn = document.getElementById('about-mac-btn');
 const aboutWin = document.getElementById('about-win');
 const closeAboutBtn = document.getElementById('close-about-btn');
 
+
 /* ── DRAG WINDOW ABOUT ── */
 const aboutTitlebar = document.getElementById('about-titlebar');
 let aboutPosX = 0, aboutPosY = 0, aboutMouseX = 0, aboutMouseY = 0;
